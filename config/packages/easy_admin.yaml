@@ -10,11 +10,11 @@ easy_admin:
         Actualite:
             class: App\Entity\Actualite
             list:
-                fields: ['id', 'Titre', 'Date', 'Image', 'Description']
+                fields: ['id', 'titre', 'date', 'image', 'description']
         User:
             class: App\Entity\User
             list:
-                fields: ['id', 'Nom', 'Prenom', 'E-mail', 'Mot de passe', 'Image','']   
+                fields: ['id', 'nom', 'prenom', 'email', 'password', 'image','roles']
                 
                 
 
