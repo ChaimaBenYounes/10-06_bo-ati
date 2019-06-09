@@ -1,9 +1,16 @@
 security:
     encoders:
+        FOS\UserBundle\Model\UserInterface: plaintext
         App\Entity\User:
             algorithm: bcrypt
 
     providers:
+        chain_provider:
+            chain:
+                providers: [fos_userbundle, entity_provider]
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
         entity_provider:
             entity:
                 class: App\Entity\User
@@ -14,11 +21,12 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         login:
-            pattern:  ^/login
+            pattern:  ^/api/login
             stateless: true
             anonymous: true
+            provider: entity_provider
             json_login:
-                check_path: /login_check
+                check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
@@ -35,8 +43,18 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+        main:
+            pattern: ^/
+            form_login:
+                check_path: /login_check
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: /admin
+            logout:       true
+            anonymous:    true
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        #- { path: ^/admin/, roles: ROLE_USER }

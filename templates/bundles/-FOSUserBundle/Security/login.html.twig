@@ -1,0 +1,81 @@
+{% extends "bundles/FOSUserBundle/layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block fos_user_content %}
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+            <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+                <div class="row w-100">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="auto-form-wrapper">
+                            <div class="form-group" style="margin-top: 200px;">
+                                <!-- @todo put logo here -->
+                            </div>
+                            <form action="{{ path("fos_user_security_check") }}" method="post">
+                                <div class="form-group">
+                                    {% if csrf_token %}
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                                    {% endif %}
+
+                                    <label class="label" for="username">{{ 'security.login.username'|trans }}</label>
+                                    <div class="input-group">
+                                        <input type="text" id="username" class="form-control"  name="_username" value="{{ last_username }}"
+                                               required="required" autocomplete="username"/>
+                                        <div class="input-group-append"><span class="input-group-text"><i class="mdi mdi-check-circle-outline"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="label" for="password">{{ 'security.login.password'|trans }}</label>
+                                    <div class="input-group">
+                                        <input type="password" id="password" class="form-control"  name="_password" required="required"
+                                               autocomplete="current-password"/>
+                                        <div class="input-group-append">
+                                  <span class="input-group-text">
+                                    <i class="mdi mdi-check-circle-outline"></i>
+                                  </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group d-flex justify-content-between">
+                                    <div class="form-check form-check-flat mt-0">
+                                        <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me" value="on"/>{{ 'security.login.remember_me'|trans }}
+                                    </div>
+                                    <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input class="btn btn-primary submit-btn btn-block" type="submit" id="_submit" name="_submit"
+                                           value="{{ 'security.login.submit'|trans }}"/>
+
+                                </div>
+
+                                <div class="text-block text-center my-3">
+                                    <span class="text-small font-weight-semibold">Not a member ?</span>
+                                    <a href="{{ path('fos_user_registration_register') }}" class="text-black text-small">Create new account</a>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <ul class="auth-footer">
+                            <li>
+                                <a href="#">Conditions</a>
+                            </li>
+                            <li>
+                                <a href="#">Help</a>
+                            </li>
+                            <li>
+                                <a href="#">Terms</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+    </div>
+{% endblock fos_user_content %}

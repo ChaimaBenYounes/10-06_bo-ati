@@ -15,9 +15,11 @@ easy_admin:
             class: App\Entity\User
             list:
                 fields: ['id', 'nom', 'prenom', 'email', 'password', 'image','roles']
+
+        Admin:
+          class: App\Entity\Admin
                 
                 
 
      
            
-      
