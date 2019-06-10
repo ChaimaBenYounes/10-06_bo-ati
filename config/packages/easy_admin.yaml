@@ -5,12 +5,36 @@ easy_admin:
            brand_color: '#81b9ba'
            assets:
                   css: ['css/backend.css']
+           menu:
+                - label: 'Management'
+                - { entity: 'Actualite', label: 'Header and News', icon: 'newspaper' }
+                - { entity: 'User', label: 'Users', icon: 'users' }
+                - { entity: 'Admin', label: 'Admin', icon: 'user' }
+  #Action configuration
+    list:
+      actions:
+        - { name: 'search', icon: 'search', label: 'Search' }
+        - { name: 'new', icon: 'plus-circle', label: 'New' }
+        - { name: 'edit', icon: 'edit', label: '' }
+        - { name: 'delete', icon: 'trash', label: '' }
+        - { name: 'show', icon: 'eye', label: '' }
 
     entities:
         Actualite:
             class: App\Entity\Actualite
             list:
-                fields: ['id', 'titre', 'date', 'image', 'description']
+                fields:
+                  - id
+                  - titre
+                  - date
+                  - description
+                  - { property: 'image', type: 'image', base_path: '%app.path.actualite_images%' }
+            new:
+                fields:
+                  - titre
+                  - description
+                  - {property: 'imageFile', label: 'image', type: 'vich_image', type_options: { allow_delete: false}}
+
         User:
             class: App\Entity\User
             list:
@@ -18,6 +42,14 @@ easy_admin:
 
         Admin:
           class: App\Entity\Admin
+          form:
+            fields:
+              - username
+              - email
+              - password
+              - enabled
+              - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+
                 
                 
 
